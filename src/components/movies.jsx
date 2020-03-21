@@ -56,11 +56,34 @@ class Movies extends Component {
     this.setState({ sortColumn });
   };
 
-  render() {
+  getPagedDate = () => {
     const {
       pageSize,
       currentPage,
       movies: allMovies,
+      selectedGenre,
+      sortColumn
+    } = this.state;
+
+    // filtering the data based on selected genre
+    const filtered =
+      selectedGenre && selectedGenre._id
+        ? allMovies.filter(m => m.genre._id === selectedGenre._id)
+        : allMovies;
+
+    // sort the filtered data
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+
+    // paginate the data
+    const movies = paginate(sorted, currentPage, pageSize);
+
+    return { totalCount: filtered.length, data: movies };
+  };
+
+  render() {
+    const {
+      pageSize,
+      currentPage,
       genres,
       selectedGenre,
       sortColumn
@@ -69,17 +92,7 @@ class Movies extends Component {
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 
-    // filtering the data based on selected genre
-    const filterd =
-      selectedGenre && selectedGenre._id
-        ? allMovies.filter(m => m.genre._id === selectedGenre._id)
-        : allMovies;
-
-    // sort the filtered data
-    const sorted = _.orderBy(filterd, [sortColumn.path], [sortColumn.order]);
-
-    // paginate the data
-    const movies = paginate(sorted, currentPage, pageSize);
+    const { totalCount, data: movies } = this.getPagedDate();
 
     return (
       <React.Fragment>
@@ -95,7 +108,7 @@ class Movies extends Component {
           </div>
 
           <div className="col">
-            <p>Showing {filterd.length} movies in the database</p>
+            <p>Showing {totalCount} movies in the database</p>
 
             <MoviesTable
               movies={movies}
@@ -106,7 +119,7 @@ class Movies extends Component {
             />
 
             <Pagination
-              itemsCount={filterd.length}
+              itemsCount={totalCount}
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={this.handlePageChange}
