@@ -27,14 +27,3 @@ class TableBody extends Component {
 }
 
 export default TableBody;
-
-// <th scope="row">{item.title}</th>
-// <td>{item.genre.name}</td>
-// <td>{item.numberInStock}</td>
-// <td>{item.dailyRentalRate}</td>
-// <td>
-//
-// </td>
-// <td>
-
-// </td>
