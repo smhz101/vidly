@@ -13,7 +13,7 @@ class MoviesTable extends Component {
     },
     { path: "genre.name", label: "Genre" },
     { path: "numberInStock", label: "Stock" },
-    { path: "dailyRentalRate", label: "Title" },
+    { path: "dailyRentalRate", label: "Rate" },
     {
       key: "like",
       label: "Like",
@@ -23,7 +23,6 @@ class MoviesTable extends Component {
     },
     {
       key: "action",
-      label: "Action",
       content: movie => (
         <button
           className="btn btn-danger btn-sm"
