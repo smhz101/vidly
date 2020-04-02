@@ -1,8 +1,6 @@
 import React from "react";
-
-import Form from "./common/form";
 import Joi from "joi-browser";
-
+import Form from "./common/form";
 import { getMovie, saveMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 
@@ -58,7 +56,7 @@ class MovieForm extends Form {
       this.setState({ data: this.mapToViewMovie(movie) });
     } catch (ex) {
       if (ex.response && ex.response.status === 404)
-        return this.props.history.replace("/not-found");
+        this.props.history.replace("/not-found");
     }
   }
 
@@ -88,7 +86,7 @@ class MovieForm extends Form {
       <div className="row">
         <div className="col-md-8 offset-md-2">
           <h1>Movies Form</h1>
-          <form onSubmit={this.doSubmit}>
+          <form onSubmit={this.handleSubmit}>
             {this.renderInput("title", "Title")}
             {this.renderSelect("genreId", "Genre", this.state.genres)}
             {this.renderInput("numberInStock", "Number in Stock")}
