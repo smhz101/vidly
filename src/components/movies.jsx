@@ -1,7 +1,8 @@
 import React, { Component } from "react";
+import _ from "lodash";
+import { toast } from "react-toastify";
 
-// Fake Data
-import { getMovies } from "../services/movieService";
+import { getMovies, deleteMovie } from "../services/movieService";
 import { getGenres } from "../services/genreService";
 
 // Utilities
@@ -14,16 +15,14 @@ import ListGroup from "./common/listGroup";
 import MoviesTable from "./moviesTable";
 import SearchBox from "./searchBox";
 
-import _ from "lodash";
-import { deleteMovie } from "../services/fakeMovieService";
-import { toast } from "react-toastify";
+import { pageSize } from "../config.json";
 
 class Movies extends Component {
   state = {
     movies: [],
     genres: [],
     currentPage: 1,
-    pageSize: 4,
+    pageSize: pageSize,
     searchQuery: "",
     selectedGenre: null,
     sortColumn: { path: "title", order: "asc" }
