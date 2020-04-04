@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import ProtectedRoute from "./components/common/protectedRoute";
 
 import Movies from "./components/movies";
 import MoviesForm from "./components/movieForm";
@@ -36,13 +37,10 @@ class App extends Component {
             <Route path="/register" component={RegisterForm}></Route>
             <Route path="/login" component={LoginForm}></Route>
             <Route path="/logout" component={Logout}></Route>
-            <Route
+            <ProtectedRoute
               path="/movies/:id"
-              render={(props) => {
-                if (!user) return <Redirect to="/login" />;
-                return <MoviesForm {...props} />;
-              }}
-            ></Route>
+              component={MoviesForm}
+            ></ProtectedRoute>
             <Route
               path="/movies"
               render={(props) => <Movies {...props} user={user} />}
