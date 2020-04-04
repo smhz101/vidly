@@ -1,4 +1,5 @@
 import axios from "axios";
+import auth from "./authService";
 import { toast } from "react-toastify";
 import logger from "./logService";
 
